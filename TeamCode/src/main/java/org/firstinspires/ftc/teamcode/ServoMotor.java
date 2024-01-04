@@ -11,7 +11,7 @@ public abstract class ServoMotor extends LinearOpMode {
 
         while(opModeIsActive()) {
             if(gamepad1.dpad_up) {
-                servo.setPosition(1);
+                servo.setPosition(1.5);
             }
             else if(gamepad1.dpad_down) {
                 servo.setPosition(0);
