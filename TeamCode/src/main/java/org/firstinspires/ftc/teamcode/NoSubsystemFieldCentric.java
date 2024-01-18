@@ -23,8 +23,9 @@ public class NoSubsystemFieldCentric extends LinearOpMode {
         DcMotor intake = hardwareMap.dcMotor.get("intake");
         Servo servo = hardwareMap.servo.get("servoMotor");
 
-        int armUpPosition = 300;
-        int armDownPosition = 50;
+        int armUpPosition = 432;
+        int armDownPosition = 0;
+
 
         double position = arm.getCurrentPosition();
         double desiredPosition = arm.getTargetPosition();
@@ -64,18 +65,18 @@ public class NoSubsystemFieldCentric extends LinearOpMode {
             if (gamepad2.circle) {
                 arm.setTargetPosition(armUpPosition);
                 arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                arm.setPower(0.35);
+                arm.setPower(0.3);
             }
             if (gamepad2.square) {
                 arm.setTargetPosition(armDownPosition);
                 arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                arm.setPower(-0.35);
+                arm.setPower(-0.3);
             }
             if(gamepad2.dpad_up) {
-                servo.setPosition(1);
+                servo.setPosition(0);
             }
             if(gamepad2.dpad_down) {
-                servo.setPosition(0);
+                servo.setPosition(1);
             }
 
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
