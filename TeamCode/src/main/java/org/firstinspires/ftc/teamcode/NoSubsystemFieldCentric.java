@@ -21,14 +21,21 @@ public class NoSubsystemFieldCentric extends LinearOpMode {
         DcMotor backRightMotor = hardwareMap.dcMotor.get("backRight");
         DcMotor arm = hardwareMap.dcMotor.get("arm");
         DcMotor intake = hardwareMap.dcMotor.get("intake");
+        DcMotor lift = hardwareMap.dcMotor.get("lift");
         Servo servo = hardwareMap.servo.get("servoMotor");
 
         int armUpPosition = 432;
         int armDownPosition = 0;
 
+        int liftUpPosition = 150;
+        int liftDownPosition = 0;
 
-        double position = arm.getCurrentPosition();
-        double desiredPosition = arm.getTargetPosition();
+
+        double armPosition = arm.getCurrentPosition();
+        double desiredArmPosition = arm.getTargetPosition();
+
+        double liftPosition = lift.getCurrentPosition();
+        double desiredLiftPosition = lift.getTargetPosition();
 
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -48,6 +55,9 @@ public class NoSubsystemFieldCentric extends LinearOpMode {
         imu.initialize(parameters);
 
         arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        lift.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         waitForStart();
@@ -77,6 +87,16 @@ public class NoSubsystemFieldCentric extends LinearOpMode {
             }
             if(gamepad2.dpad_down) {
                 servo.setPosition(1);
+            }
+            if(gamepad2.left_bumper) {
+                lift.setTargetPosition(liftUpPosition);
+                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                lift.setPower(0.2);
+            }
+            if(gamepad2.right_bumper) {
+                lift.setTargetPosition(liftDownPosition);
+                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                lift.setPower(-0.2);
             }
 
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
