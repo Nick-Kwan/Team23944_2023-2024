@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="VeryBasicFieldCentric", group="DriveModes")
 public class NoSubsystemFieldCentric extends LinearOpMode {
@@ -62,6 +63,51 @@ public class NoSubsystemFieldCentric extends LinearOpMode {
 
         waitForStart();
 
+        /*
+
+         * Proportional Integral Derivative Controller
+
+         */
+
+        double out = 0;
+        double Kp = 0;
+        double Ki = 0;
+        double Kd = 0;
+
+        double reference = 432;
+
+        double integralSum = 0;
+
+        double lastError = 0;
+
+// Elapsed timer class from SDK, please use it, it's epic
+        ElapsedTime timer = new ElapsedTime();
+
+        while (arm.getCurrentPosition() != reference) {
+
+
+            // obtain the encoder position
+            double encoderPosition = arm.getCurrentPosition();
+            // calculate the error
+            double error = reference - encoderPosition;
+
+            // rate of change of the error
+            double derivative = (error - lastError) / timer.seconds();
+
+            // sum of all error over time
+            integralSum = integralSum + (error * timer.seconds());
+
+            out = (Kp * error) + (Ki * integralSum) + (Kd * derivative);
+
+            arm.setPower(out);
+
+            lastError = error;
+
+            // reset the timer for next time
+            timer.reset();
+
+        }
+        
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
@@ -75,7 +121,7 @@ public class NoSubsystemFieldCentric extends LinearOpMode {
             if (gamepad2.circle) {
                 arm.setTargetPosition(armUpPosition);
                 arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                arm.setPower(0.3);
+                arm.setPower(out);
             }
             if (gamepad2.square) {
                 arm.setTargetPosition(armDownPosition);
