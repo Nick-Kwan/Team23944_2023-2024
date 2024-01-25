@@ -3,8 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -15,12 +14,12 @@ public class NoSubsystemFieldCentric extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         // Declare our motors
         // Make sure your ID's match your configuration
-        DcMotor frontLeftMotor = hardwareMap.dcMotor.get("frontLeft");
-        DcMotor backLeftMotor = hardwareMap.dcMotor.get("backLeft");
-        DcMotor frontRightMotor = hardwareMap.dcMotor.get("frontRight");
-        DcMotor backRightMotor = hardwareMap.dcMotor.get("backRight");
-        DcMotor arm = hardwareMap.dcMotor.get("arm");
-        DcMotor intake = hardwareMap.dcMotor.get("intake");
+        DcMotorEx frontLeftMotor = hardwareMap.get(DcMotorEx.class,"frontLeft");
+        DcMotorEx backLeftMotor = hardwareMap.get(DcMotorEx.class,"backLeft");
+        DcMotorEx frontRightMotor = hardwareMap.get(DcMotorEx.class,"frontRight");
+        DcMotorEx backRightMotor = hardwareMap.get(DcMotorEx.class,"backRight");
+        DcMotorEx arm = hardwareMap.get(DcMotorEx.class,"arm");
+        DcMotorEx intake = hardwareMap.get(DcMotorEx.class,"intake");
         Servo servo = hardwareMap.servo.get("servoMotor");
 
         int armUpPosition = 432;
@@ -29,13 +28,13 @@ public class NoSubsystemFieldCentric extends LinearOpMode {
         double armPosition = arm.getCurrentPosition();
         double desiredArmPosition = arm.getTargetPosition();
 
-        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        arm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
         // reverse the left side instead.
         // See the note about this earlier on this page.
-        frontLeftMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+        frontLeftMotor.setDirection(DcMotorEx.Direction.REVERSE);
 
         // Retrieve the IMU from the hardware map
         IMU imu = hardwareMap.get(IMU.class, "imu");
@@ -46,10 +45,10 @@ public class NoSubsystemFieldCentric extends LinearOpMode {
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         imu.initialize(parameters);
 
-        arm.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        arm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        arm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
-        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        arm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
         waitForStart();
 
@@ -65,12 +64,12 @@ public class NoSubsystemFieldCentric extends LinearOpMode {
             }
             if (gamepad2.circle) {
                 arm.setTargetPosition(armUpPosition);
-                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
                 arm.setPower(0.3);
             }
             if (gamepad2.square) {
                 arm.setTargetPosition(armDownPosition);
-                arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
                 arm.setPower(-0.3);
             }
             if(gamepad2.dpad_up) {
