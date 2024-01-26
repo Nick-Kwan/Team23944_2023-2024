@@ -1,8 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -22,7 +22,7 @@ public class NoSubsystemFieldCentric extends LinearOpMode {
         DcMotorEx intake = hardwareMap.get(DcMotorEx.class,"intake");
         Servo servo = hardwareMap.servo.get("servoMotor");
 
-        int armUpPosition = 432;
+        int armUpPosition = 200;
         int armDownPosition = 0;
 
         double armPosition = arm.getCurrentPosition();
