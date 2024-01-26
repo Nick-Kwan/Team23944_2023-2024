@@ -20,7 +20,7 @@ public class PID extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        motor = hardwareMap.get(DcMotorEx.class, "PIDMotor");
+        motor = hardwareMap.get(DcMotorEx.class, "arm");
         motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         waitForStart();
 
