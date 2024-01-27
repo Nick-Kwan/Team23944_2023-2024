@@ -27,7 +27,7 @@ public class NoSubsystemFieldCentric extends LinearOpMode {
         int armDownPosition = 0;
 
         int armPosition = arm.getCurrentPosition();
-        int desiredArmPosition = arm.getTargetPosition();
+        int desiredArmPosition = armUpPosition;
 
         arm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
@@ -68,7 +68,7 @@ public class NoSubsystemFieldCentric extends LinearOpMode {
                 intake.setPower(0);
             }
             if (gamepad2.circle) {
-                desiredArmPosition = armUpPosition;
+                arm.setTargetPosition(desiredArmPosition);
                 arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
                 arm.setPower(0.3);
             }
