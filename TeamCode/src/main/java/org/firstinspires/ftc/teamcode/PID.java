@@ -3,31 +3,24 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.HardwareDevice;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-public class PID extends LinearOpMode {
+public class PID {
 
-    DcMotorEx motor;
 
-    double integralSum = 0;
-    double kp = 1;
-    double ki = 0;
-    double kd = 0;
-    double kf = 1;
+    private double integralSum = 0;
+    private double kp, ki, kd, kf;
     private double lastError = 0;
 
     ElapsedTime timer = new ElapsedTime();
 
-    @Override
-    public void runOpMode() {
-        motor = hardwareMap.get(DcMotorEx.class, "arm");
-        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        waitForStart();
-
-        while(opModeIsActive()) {
-            double power = PIDControl(1000, motor.getVelocity());
-            motor.setPower(power);
-        }
+    public PID(double kp, double ki, double kd) {
+        this.kp = kp;
+        this.ki = ki;
+        this.kd = kd;
+        this.kf = kf;
     }
 
     public double PIDControl(double reference, double state) {
