@@ -11,7 +11,10 @@ public class PID {
 
 
     private double integralSum = 0;
-    private double kp, ki, kd, kf;
+    private final double kp;
+    private final double ki;
+    private final double kd;
+    private double kf;
     private double lastError = 0;
 
     ElapsedTime timer = new ElapsedTime();
