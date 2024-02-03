@@ -23,7 +23,6 @@ public class PID {
         this.kp = kp;
         this.ki = ki;
         this.kd = kd;
-        this.kf = kf;
     }
 
     public double PIDControl(double reference, double state) {
