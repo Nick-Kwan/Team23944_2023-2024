@@ -21,6 +21,7 @@ public class NoSubsystemFieldCentric extends LinearOpMode {
         DcMotorEx arm = hardwareMap.get(DcMotorEx.class,"arm");
         DcMotorEx intake = hardwareMap.get(DcMotorEx.class,"intake");
         Servo servo = hardwareMap.servo.get("servoMotor");
+        Servo launch = hardwareMap.servo.get("launcher");
         PID armPID = new PID(0.15,0.0,0.0);
 
         int armUpPosition = 200;
@@ -69,14 +70,14 @@ public class NoSubsystemFieldCentric extends LinearOpMode {
                 intake.setPower(0);
             }
             if (gamepad2.circle) {
-                arm.setTargetPosition(desiredArmPosition);
+                armPID.PIDControl(desiredArmPosition, armPosition);
                 arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                arm.setPower(0.3);
+                arm.setPower(0.5);
             }
             if (gamepad2.square) {
                 arm.setTargetPosition(armDownPosition);
                 arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                arm.setPower(-0.3);
+                arm.setPower(-0.5);
             }
             if(gamepad2.dpad_up) {
                 servo.setPosition(0);
