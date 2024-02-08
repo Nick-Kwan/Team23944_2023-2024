@@ -18,21 +18,8 @@ public class NoSubsystemFieldCentric extends LinearOpMode {
         DcMotorEx backLeftMotor = hardwareMap.get(DcMotorEx.class,"backLeft");
         DcMotorEx frontRightMotor = hardwareMap.get(DcMotorEx.class,"frontRight");
         DcMotorEx backRightMotor = hardwareMap.get(DcMotorEx.class,"backRight");
-        DcMotorEx arm = hardwareMap.get(DcMotorEx.class,"arm");
         DcMotorEx intake = hardwareMap.get(DcMotorEx.class,"intake");
         Servo servo = hardwareMap.servo.get("servoMotor");
-        Servo launch = hardwareMap.servo.get("launcher");
-        PID armPID = new PID(0.15,0.0,0.0);
-
-        int armUpPosition = 200;
-        int armDownPosition = 0;
-
-        double armPower = 0.0;
-
-        int armPosition = arm.getCurrentPosition();
-        int desiredArmPosition = armUpPosition;
-
-        arm.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
@@ -49,19 +36,11 @@ public class NoSubsystemFieldCentric extends LinearOpMode {
         // Without this, the REV Hub's orientation is assumed to be logo up / USB forward
         imu.initialize(parameters);
 
-        arm.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        arm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-
-        arm.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
-
         waitForStart();
 
         if (isStopRequested()) return;
 
         while (opModeIsActive()) {
-
-            armPower = armPID.PIDControl(desiredArmPosition, armPosition); // returns a double
-            arm.setTargetPosition(desiredArmPosition);
 
             if(gamepad2.triangle) {
                 intake.setPower(-0.55);
@@ -69,16 +48,7 @@ public class NoSubsystemFieldCentric extends LinearOpMode {
             if(gamepad2.cross) {
                 intake.setPower(0);
             }
-            if (gamepad2.circle) {
-                armPID.PIDControl(desiredArmPosition, armPosition);
-                arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                arm.setPower(0.5);
-            }
-            if (gamepad2.square) {
-                arm.setTargetPosition(armDownPosition);
-                arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                arm.setPower(-0.5);
-            }
+
             if(gamepad2.dpad_up) {
                 servo.setPosition(0);
             }
