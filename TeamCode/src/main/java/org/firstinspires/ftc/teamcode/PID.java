@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class PID {
 
-
     private double integralSum = 0;
     private final double kp;
     private final double ki;
