@@ -19,7 +19,6 @@ public class NoSubsystemFieldCentric extends LinearOpMode {
         DcMotorEx frontRightMotor = hardwareMap.get(DcMotorEx.class,"frontRight");
         DcMotorEx backRightMotor = hardwareMap.get(DcMotorEx.class,"backRight");
         DcMotorEx intake = hardwareMap.get(DcMotorEx.class,"intake");
-        Servo servo = hardwareMap.servo.get("servoMotor");
 
         // Reverse the right side motors. This may be wrong for your setup.
         // If your robot moves backwards when commanded to go forwards,
@@ -47,13 +46,6 @@ public class NoSubsystemFieldCentric extends LinearOpMode {
             }
             if(gamepad2.cross) {
                 intake.setPower(0);
-            }
-
-            if(gamepad2.dpad_up) {
-                servo.setPosition(0);
-            }
-            if(gamepad2.dpad_down) {
-                servo.setPosition(1);
             }
 
             double y = -gamepad1.left_stick_y; // Remember, Y stick value is reversed
