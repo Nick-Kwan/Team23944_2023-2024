@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name="VeryBasicFieldCentric", group="DriveModes")
 public class NoSubsystemFieldCentric extends LinearOpMode {
